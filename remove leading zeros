@@ -1,0 +1,10 @@
+if (input != null && input != ' ')
+{
+input = "0" + input;
+while({
+		input = input.replaceFirst("0", "");
+		((input.charAt(0) == "0") && (input.length() > 1));
+	}()) continue;
+}
+
+output = input;
