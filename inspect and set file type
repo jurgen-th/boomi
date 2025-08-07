@@ -1,0 +1,36 @@
+for (int i = 0; i <dataContext.getDataCount(); i++) {
+	//Get orginal input stream and properties
+	
+	InputStream originalInputStream = dataContext.getProperties(i);
+	Properties properties = dataContext.getProperties(i);
+	
+	//Read the content of the input stream into a byte array
+	ByteArrayOutputStream baos =  ew ByteArrayOutputStream();
+	byte[] buffer = new byte[1024];
+	int bytesRead;
+	while ((bytesRead = originalInputStream.read(buffer)) != -1) {
+		baos.write(buffer,0,bytesRead);
+		}
+	byte[] contentBytes = baos.toByteArray();
+	
+	//Determine the file type based on the content
+	String fileType;
+	if (contentBytes.length > 0 && contentBytes[0] == '<'){
+	fileType = "xml";
+	}
+	else if (contentBytes.length > 0 && contentBytes[0] == '{'){
+	fileType = "json";
+	}
+	else {
+	fileType = "unknown";
+	}
+	
+	//Set the dynamic process property "DPP_FileType" with the file type
+	ExecutionUtil.setDynamicProcessProperty("DPP_FileType", fileType, false);
+	
+	//Create a new input stream containing the content from the byte array
+	InputStream newInputStream = mew ByteArrayInputStream(contentBytes);
+	
+	//Store the new input stream back to the data context
+	dataContext.storesStream(newInputStream, properties);
+}
