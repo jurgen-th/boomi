@@ -1,0 +1,8 @@
+NbrOfZerosToAdd = LengthToAchieve - Input.length();
+
+Output = Input;
+
+for (int i = 1; i <= NbrOfZerosToAdd; i++){
+	Output = "0" + Output;
+	}
+
